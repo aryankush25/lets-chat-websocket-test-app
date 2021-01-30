@@ -35,19 +35,21 @@ function App({ from, to }) {
 			}
 		})
 
-		socketRef.current.emit('userOnline', { userId: from }, (error: any) => {
-			if (error) {
-				alert(error)
-			}
-		})
-
-		socketRef.current.on('message', (props: any) => {
-			console.log(props)
+		socketRef.current.on('message', (update: any) => {
+			console.log(update)
 		})
 	}, [from])
 
 	const handleSendMessage = () => {
-		socketRef.current.emit('message', { text, to })
+		socketRef.current.emit('message', { text, to }, (response: any) => {
+			console.log('#### response', response)
+
+			const { isSuccess } = response
+
+			if (!isSuccess) {
+				alert(response.error)
+			}
+		})
 	}
 
 	return (
