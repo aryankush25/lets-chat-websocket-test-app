@@ -43,7 +43,7 @@ function App({ from, to }) {
 
 	React.useEffect(() => {
 		userOnlineSocketRef.current = io('http://localhost:7000', {
-			path: 'userOnline',
+			path: '/userOnline',
 			transports: ['websocket'],
 			auth: {
 				token: users.find((user) => from === user.id).token
@@ -54,7 +54,7 @@ function App({ from, to }) {
 		})
 
 		userOnlineSocketRef.current.on('message', (update: any) => {
-			console.log('message update', update)
+			console.log('userOnline message update', update)
 		})
 	}, [from, to])
 
@@ -86,8 +86,6 @@ const MainApp = () => {
 		from: '',
 		to: ''
 	})
-
-	console.log('#### userIds', userIds)
 
 	if (userIds.to && userIds.from) {
 		return <App from={userIds.from} to={userIds.to} />
