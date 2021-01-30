@@ -5,15 +5,21 @@ import './App.css'
 const users = [
 	{
 		name: 'Aryan Agarwal',
-		id: '7b54826b-67e1-4477-bedb-d6f271364007'
+		id: '7b54826b-67e1-4477-bedb-d6f271364007',
+		token:
+			'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdiNTQ4MjZiLTY3ZTEtNDQ3Ny1iZWRiLWQ2ZjI3MTM2NDAwNyIsImVtYWlsIjoiYXJ5YW5AZ2Vla3lhbnRzLmNvbSIsImV4cCI6MTYxNzEyNDUwOSwiaWF0IjoxNjExOTQwNTA5fQ.U3hziXx623506U-sqfTWcaqjcGYtCCVOE7t4h8E1yjc'
 	},
 	{
 		name: 'Aryan Kush',
-		id: 'f674fa6d-8dcb-43f4-bfbc-d744956d5c63'
+		id: 'f674fa6d-8dcb-43f4-bfbc-d744956d5c63',
+		token:
+			'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY2NzRmYTZkLThkY2ItNDNmNC1iZmJjLWQ3NDQ5NTZkNWM2MyIsImVtYWlsIjoiYXJ5YW5rdXNoMDI1QGdtYWlsLmNvbSIsImV4cCI6MTYxNzEyNDU1MSwiaWF0IjoxNjExOTQwNTUxfQ.YWJ0PJ0jMOugv0raQJogApJmRpUKhDGFtrxlBwUgiww'
 	},
 	{
 		name: 'Nayan J Das',
-		id: '563ad164-9c2f-49f7-856e-0ac116bb44c2'
+		id: '563ad164-9c2f-49f7-856e-0ac116bb44c2',
+		token:
+			'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU2M2FkMTY0LTljMmYtNDlmNy04NTZlLTBhYzExNmJiNDRjMiIsImVtYWlsIjoibmF5YW5qQGdlZWt5YW50cy5jb20iLCJleHAiOjE2MTcxMjQ1ODIsImlhdCI6MTYxMTk0MDU4Mn0.jSKZCmEQx0SG9NR8JsbVmTpOKOxdjvCbGYTJCazMOBU'
 	}
 ]
 
@@ -25,10 +31,7 @@ function App({ from, to }) {
 		socketRef.current = io('http://localhost:7000', {
 			transports: ['websocket'],
 			auth: {
-				token: '123'
-			},
-			query: {
-				'my-key': 'my-value'
+				token: users.find((user) => from === user.id).token
 			}
 		})
 
