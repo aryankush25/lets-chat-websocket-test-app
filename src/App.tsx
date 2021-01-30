@@ -26,6 +26,7 @@ const users = [
 function App({ from, to }) {
 	const [text, setText] = useState('')
 	const socketRef = React.useRef(null)
+	const userOnlineSocketRef = React.useRef(null)
 
 	React.useEffect(() => {
 		socketRef.current = io('http://localhost:7000', {
@@ -36,9 +37,26 @@ function App({ from, to }) {
 		})
 
 		socketRef.current.on('message', (update: any) => {
-			console.log(update)
+			console.log('message update', update)
 		})
 	}, [from])
+
+	React.useEffect(() => {
+		userOnlineSocketRef.current = io('http://localhost:7000', {
+			path: 'userOnline',
+			transports: ['websocket'],
+			auth: {
+				token: users.find((user) => from === user.id).token
+			},
+			query: {
+				userToSubscribe: to
+			}
+		})
+
+		userOnlineSocketRef.current.on('message', (update: any) => {
+			console.log('message update', update)
+		})
+	}, [from, to])
 
 	const handleSendMessage = () => {
 		socketRef.current.emit('message', { text, to }, (response: any) => {
